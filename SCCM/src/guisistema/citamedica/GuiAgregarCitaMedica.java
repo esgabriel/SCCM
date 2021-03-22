@@ -151,25 +151,9 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFechaActionPerformed
-        // TODO add your handling code here:
-        //Calendar calendario = new GregorianCalendar();
-        //int hora = calendario.get(Calendar.HOUR_OF_DAY);
-        //int dia = calendario.get(Calendar.DAY_OF_WEEK);
-        int hora = Integer.valueOf(tHora.getText());
-        int dia = cDia.getSelectedIndex()+1;
-
-        if (verificar(dia, hora)) {
-            String []cadenaNue = horario.get(hora).split(",");
-
-            cadenaNue[dia] = medicos.get(cNombreDoc.getSelectedIndex()).getCedula()+"-"+pacientes.get(cNSS.getSelectedIndex()).getNSS();
-            String cadenaNueF = cadenaNue[0]+","+cadenaNue[1]+","+cadenaNue[2]+","+cadenaNue[3]+","+cadenaNue[4]+","+cadenaNue[5]+","+cadenaNue[6]+","+cadenaNue[7];
-            horario.set(hora, cadenaNueF);
-            mt.guardarTxt(horario, "HorarioDB.txt");
-            JOptionPane.showMessageDialog(this, "Cita medica agregada correctamente");
-            GestionMedico gm = new GestionMedico();
-            gm.setVisible(true);
-            dispose();
-        }
+        
+        
+       
     }//GEN-LAST:event_bFechaActionPerformed
 
     private void cDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cDiaActionPerformed
