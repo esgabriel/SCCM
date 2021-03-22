@@ -1,14 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clases;
 
-/**
- *
- * @author TheHu
- */
 public class Paciente {
-    
+
+    private int numeroSeguroSocial;
+
+    public void agregar() {
+
+    }
+
+    public void eliminar() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Paciente{" + "numeroSeguroSocial=" + numeroSeguroSocial + '}';
+    }
+
+    public void modificar() {
+
+    }
+
+    public int getNumeroSeguroSocial() {
+        return numeroSeguroSocial;
+    }
+
+    public void setNumeroSeguroSocial(int numeroSeguroSocial) {
+        this.numeroSeguroSocial = numeroSeguroSocial;
+    }
+
 }
