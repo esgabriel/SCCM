@@ -1,20 +1,28 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package clases;
 
+/**
+ *
+ * @author TheHu
+ */
 public class Persona {
-
     private String nombre;
     private String aP;
     private String aM;
     private String fechaNacimiento;
-
-    public Persona() {
+    
+    public Persona(){
         this.nombre = "";
         this.aP = "";
         this.aM = "";
-        this.fechaNacimiento = "";
+        this.fechaNacimiento="";
     }
-
-    public Persona(String nombre, String aP, String aM, String fechaNacimiento) {
+    
+    public Persona(String nombre, String aP, String aM, String fechaNacimiento){
         this.nombre = nombre;
         this.aP = aP;
         this.aM = aM;
@@ -52,12 +60,11 @@ public class Persona {
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-
+    
     @Override
-    public String toString() {
-        String persona = nombre + "," + aP + "," + aM + "," + fechaNacimiento;
-
+    public String toString(){
+        String persona = nombre +","+aP+","+aM+","+fechaNacimiento;
+        
         return persona;
     }
-
 }
