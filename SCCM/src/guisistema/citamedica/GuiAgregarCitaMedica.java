@@ -16,6 +16,7 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
      */
     public GuiAgregarCitaMedica() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -44,6 +45,11 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
         tHora.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         cNSS.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cNSS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cNSSActionPerformed(evt);
+            }
+        });
 
         bFecha.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         bFecha.setText("Agendar Cita");
@@ -160,6 +166,10 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cDiaActionPerformed
 
+    private void cNSSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cNSSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cNSSActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -171,7 +181,7 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
