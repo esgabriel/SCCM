@@ -2,14 +2,14 @@ package clases;
 
 public class Paciente extends Persona{
 
-    private int numeroSeguroSocial;
+    private String numeroSeguroSocial;
     
-    public Paciente(int numeroSeguroSocial) {
+    public Paciente(String numeroSeguroSocial) {
         super();
         this.numeroSeguroSocial = numeroSeguroSocial;
     }
     
-    public Paciente(int numeroSeguroSocial, String nombre, String aP, String aM, String fechaNacimiento)
+    public Paciente(String numeroSeguroSocial, String nombre, String aP, String aM, String fechaNacimiento)
     {
         super(nombre, aP, aM, fechaNacimiento);
         this.numeroSeguroSocial = numeroSeguroSocial;
@@ -36,11 +36,11 @@ public class Paciente extends Persona{
 
     }
 
-    public int getNumeroSeguroSocial() {
+    public String getNumeroSeguroSocial() {
         return numeroSeguroSocial;
     }
 
-    public void setNumeroSeguroSocial(int numeroSeguroSocial) {
+    public void setNumeroSeguroSocial(String numeroSeguroSocial) {
         this.numeroSeguroSocial = numeroSeguroSocial;
     }
 
