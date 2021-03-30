@@ -8,11 +8,12 @@ import javax.swing.JOptionPane;
 public class GuiModificarPaciente extends javax.swing.JFrame {
     
     private ArrayList<Paciente> pacientes;
-
+    private final int TAMANIONSS = 11;
+    
     public GuiModificarPaciente() {
         initComponents();
         DB mt = new DB();
-        pacientes = mt.leerTxt("MedicoDB.txt");
+        pacientes = mt.leerTxt("PacienteDB.txt");
         for (Paciente paciente : pacientes) {
             cNSS.addItem(paciente.getNumeroSeguroSocial());
         }
@@ -176,9 +177,9 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
             pacientes.remove(cNSS.getSelectedIndex());
             pacientes.add(paciente);
             
-            mt.guardarTxt(pacientes, "MedicoDB.txt");
+            mt.guardarTxt(pacientes, "PacienteDB.txt");
             
-            JOptionPane.showMessageDialog(this, "Medico modificado correctamente");
+            JOptionPane.showMessageDialog(this, "Paciente modificado correctamente");
 
             GuiPaciente gm = new GuiPaciente();
             gm.setVisible(true);
@@ -201,14 +202,34 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_cNSSActionPerformed
 
     private boolean evaluarCampos(){
-        if ( !((tNombre.getText().equals("")) ||
-                (tApellidoP.getText().equals("")) ||
-                (tApellidoM.getText().equals("")) ||
-                (tNSS.getText().equals("")))) {
-            return true;
-        }else{
+        
+        if (!((tNombre.getText().equals(""))
+                || (tApellidoP.getText().equals(""))
+                || (tApellidoM.getText().equals(""))
+                || (tNSS.getText().equals("")))) {
+            if (tNSS.getText().length() == TAMANIONSS) {
+                for (int i = 0; i < pacientes.size(); i++) {
+                    String NSS = tNSS.getText();
+                    if ( pacientes.get(i).getNumeroSeguroSocial().equals(NSS) && cNSS.getSelectedIndex() !=i ) {
+                        
+                        JOptionPane.showMessageDialog(this, "El numero de seguro social ingresado ya se encuentra dentro del sistema");
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(this, "El formato del numero de seguro social es incorrecto");
+                return false;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Algun campo se encuentra vacio, verifique nuevamente los campos");
             return false;
         }
+        
+        
+        
+        
+        
     }
     
     /**
