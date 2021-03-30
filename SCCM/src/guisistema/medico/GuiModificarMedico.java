@@ -18,6 +18,8 @@ public class GuiModificarMedico extends javax.swing.JFrame {
      * Creates new form GuiModificarMedico
      */
     private ArrayList<Medico> medicos;
+    private final int TAMANIONSS = 8;
+    
     public GuiModificarMedico() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -39,19 +41,19 @@ public class GuiModificarMedico extends javax.swing.JFrame {
 
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        ApellidoP = new javax.swing.JTextField();
-        Nombre = new javax.swing.JTextField();
+        tApellidoP = new javax.swing.JTextField();
+        tNombre = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        ApellidoM = new javax.swing.JTextField();
-        Mes = new javax.swing.JTextField();
+        tApellidoM = new javax.swing.JTextField();
+        tMes = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        Dia = new javax.swing.JTextField();
-        CedulaPro = new javax.swing.JTextField();
+        tDia = new javax.swing.JTextField();
+        tCedulaPro = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        Anio = new javax.swing.JTextField();
+        tAnio = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         cCedulas = new javax.swing.JComboBox<>();
@@ -64,24 +66,24 @@ public class GuiModificarMedico extends javax.swing.JFrame {
         jLabel8.setText("Cedula Profesional");
 
         jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton1.setText("Agregar");
+        jButton1.setText("Modificar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        ApellidoP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ApellidoP.addActionListener(new java.awt.event.ActionListener() {
+        tApellidoP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tApellidoP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ApellidoPActionPerformed(evt);
+                tApellidoPActionPerformed(evt);
             }
         });
 
-        Nombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        Nombre.addActionListener(new java.awt.event.ActionListener() {
+        tNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreActionPerformed(evt);
+                tNombreActionPerformed(evt);
             }
         });
 
@@ -91,17 +93,17 @@ public class GuiModificarMedico extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Fecha Nacimiento");
 
-        ApellidoM.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        ApellidoM.addActionListener(new java.awt.event.ActionListener() {
+        tApellidoM.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tApellidoM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ApellidoMActionPerformed(evt);
+                tApellidoMActionPerformed(evt);
             }
         });
 
-        Mes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        Mes.addActionListener(new java.awt.event.ActionListener() {
+        tMes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tMes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MesActionPerformed(evt);
+                tMesActionPerformed(evt);
             }
         });
 
@@ -111,17 +113,17 @@ public class GuiModificarMedico extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Día:");
 
-        Dia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        Dia.addActionListener(new java.awt.event.ActionListener() {
+        tDia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DiaActionPerformed(evt);
+                tDiaActionPerformed(evt);
             }
         });
 
-        CedulaPro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        CedulaPro.addActionListener(new java.awt.event.ActionListener() {
+        tCedulaPro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tCedulaPro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CedulaProActionPerformed(evt);
+                tCedulaProActionPerformed(evt);
             }
         });
 
@@ -131,10 +133,10 @@ public class GuiModificarMedico extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Mes:");
 
-        Anio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        Anio.addActionListener(new java.awt.event.ActionListener() {
+        tAnio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tAnio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AnioActionPerformed(evt);
+                tAnioActionPerformed(evt);
             }
         });
 
@@ -175,7 +177,7 @@ public class GuiModificarMedico extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Dia, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tDia, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))
                                 .addGap(56, 56, 56)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,12 +186,12 @@ public class GuiModificarMedico extends javax.swing.JFrame {
                                         .addGap(67, 67, 67)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jLabel7)
-                                            .addComponent(Anio, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(Mes, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(tAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(tMes, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
-                                .addComponent(CedulaPro, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(tCedulaPro, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton2)
@@ -209,9 +211,9 @@ public class GuiModificarMedico extends javax.swing.JFrame {
                                     .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(ApellidoP, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
-                                    .addComponent(ApellidoM, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
-                                    .addComponent(Nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                                    .addComponent(tApellidoP, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                                    .addComponent(tApellidoM, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                                    .addComponent(tNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
                                     .addComponent(cCedulas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(252, 252, 252))))
         );
@@ -232,13 +234,13 @@ public class GuiModificarMedico extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(ApellidoP, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tApellidoP, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
-                    .addComponent(ApellidoM, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tApellidoM, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jLabel4)
                 .addGap(32, 32, 32)
@@ -248,13 +250,13 @@ public class GuiModificarMedico extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(CedulaPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tCedulaPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -270,8 +272,8 @@ public class GuiModificarMedico extends javax.swing.JFrame {
         DB mt = new DB();
 
         if( this.evaluarCampos() ){
-            String fecha = Dia.getText() + "-"+Mes.getText()+"-"+Anio.getText();
-            Medico medico = new Medico( CedulaPro.getText(), Nombre.getText(), ApellidoP.getText(), ApellidoM.getText(), fecha);
+            String fecha = tDia.getText() + "-"+tMes.getText()+"-"+tAnio.getText();
+            Medico medico = new Medico( tCedulaPro.getText(), tNombre.getText(), tApellidoP.getText(), tApellidoM.getText(), fecha);
        
             medicos.remove(cCedulas.getSelectedIndex());
             medicos.add(medico);
@@ -290,22 +292,35 @@ public class GuiModificarMedico extends javax.swing.JFrame {
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 private boolean evaluarCampos(){
-        if ( !((Nombre.getText().equals("")) ||
-                (ApellidoP.getText().equals("")) ||
-                (ApellidoM.getText().equals("")) ||
-                (CedulaPro.getText().equals("")))) {
-            return true;
-        }else{
+        if (!((tNombre.getText().equals(""))
+                || (tApellidoP.getText().equals(""))
+                || (tApellidoM.getText().equals(""))
+                || (tCedulaPro.getText().equals("")))) {
+            if (tCedulaPro.getText().length() == TAMANIONSS) {
+                for (int i = 0; i < medicos.size(); i++) {
+                    String cedula = tCedulaPro.getText();
+                    if ( medicos.get(i).getCedula().equals(cedula) && cCedulas.getSelectedIndex() != i ) {
+                        JOptionPane.showMessageDialog(this, "La cedula que intento ingresar ya se encuentra dentro del sistema");
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(this, "El formato de la cedula es incorrecto");
+                return false;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Algun campo se encuentra vacio, verifique nuevamente los campos");
             return false;
         }
     }
-    private void ApellidoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidoPActionPerformed
+    private void tApellidoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tApellidoPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ApellidoPActionPerformed
+    }//GEN-LAST:event_tApellidoPActionPerformed
 
-    private void CedulaProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CedulaProActionPerformed
+    private void tCedulaProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCedulaProActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CedulaProActionPerformed
+    }//GEN-LAST:event_tCedulaProActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -315,28 +330,37 @@ private boolean evaluarCampos(){
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void DiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DiaActionPerformed
+    private void tDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tDiaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_DiaActionPerformed
+    }//GEN-LAST:event_tDiaActionPerformed
 
-    private void MesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MesActionPerformed
+    private void tMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tMesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_MesActionPerformed
+    }//GEN-LAST:event_tMesActionPerformed
 
-    private void AnioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnioActionPerformed
+    private void tAnioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tAnioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_AnioActionPerformed
+    }//GEN-LAST:event_tAnioActionPerformed
 
-    private void NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreActionPerformed
+    private void tNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NombreActionPerformed
+    }//GEN-LAST:event_tNombreActionPerformed
 
-    private void ApellidoMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidoMActionPerformed
+    private void tApellidoMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tApellidoMActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ApellidoMActionPerformed
+    }//GEN-LAST:event_tApellidoMActionPerformed
 
     private void cCedulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cCedulasActionPerformed
         // TODO add your handling code here:
+        tNombre.setText(medicos.get(cCedulas.getSelectedIndex()).getNombre());
+        tApellidoP.setText(medicos.get(cCedulas.getSelectedIndex()).getaP());
+        tApellidoM.setText(medicos.get(cCedulas.getSelectedIndex()).getaM());
+        tCedulaPro.setText(medicos.get(cCedulas.getSelectedIndex()).getCedula());
+        
+        String[] fecha = medicos.get(cCedulas.getSelectedIndex()).getFechaNacimiento().split("-");
+        tDia.setText(fecha[0]);
+        tMes.setText(fecha[1]);
+        tAnio.setText(fecha[2]);
     }//GEN-LAST:event_cCedulasActionPerformed
 
     /**
@@ -375,13 +399,6 @@ private boolean evaluarCampos(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Anio;
-    private javax.swing.JTextField ApellidoM;
-    private javax.swing.JTextField ApellidoP;
-    private javax.swing.JTextField CedulaPro;
-    private javax.swing.JTextField Dia;
-    private javax.swing.JTextField Mes;
-    private javax.swing.JTextField Nombre;
     private javax.swing.JComboBox<String> cCedulas;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -395,5 +412,12 @@ private boolean evaluarCampos(){
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField tAnio;
+    private javax.swing.JTextField tApellidoM;
+    private javax.swing.JTextField tApellidoP;
+    private javax.swing.JTextField tCedulaPro;
+    private javax.swing.JTextField tDia;
+    private javax.swing.JTextField tMes;
+    private javax.swing.JTextField tNombre;
     // End of variables declaration//GEN-END:variables
 }
