@@ -9,16 +9,36 @@ package guisistema.citamedica;
  *
  * @author TheHu
  */
+import clases.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.JOptionPane;
+       //import txtPlano.*;
+
 public class GuiAgregarCitaMedica extends javax.swing.JFrame {
 
+    private DB mt = new DB();
+    private ArrayList<Paciente>pacientes = mt.leerTxt("PacienteDB.txt"); 
+    private ArrayList<Medico>medicos = mt.leerTxt("MedicoDB.txt");
+    private ArrayList<String>horario = mt.leerTxt("HorarioDB.txt");
+    
+    
     /**
      * Creates new form GuiAgregarCitaMedica
      */
     public GuiAgregarCitaMedica() {
         initComponents();
-        this.setLocationRelativeTo(null);
+         cargarDatos();
     }
-
+private void cargarDatos(){
+        for (Medico medic : medicos) {
+            cNombreDoc.addItem(medic.getNombre()+" "+medic.getaP()+" "+medic.getaM());
+        }
+        for (Paciente pacien : pacientes) {
+            cNSS.addItem(pacien.getNumeroSeguroSocial());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,10 +178,32 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
 
     private void bFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFechaActionPerformed
         
+       int hora = Integer.valueOf(tHora.getText());
+        int dia = cDia.getSelectedIndex()+1;
         
+        if (verificar(dia, hora)) {
+            String []cadenaNue = horario.get(hora).split(",");
+            
+            cadenaNue[dia] = medicos.get(cNombreDoc.getSelectedIndex()).getCedula()+"-"+pacientes.get(cNSS.getSelectedIndex()).getNumeroSeguroSocial();
+            String cadenaNueF = cadenaNue[0]+","+cadenaNue[1]+","+cadenaNue[2]+","+cadenaNue[3]+","+cadenaNue[4]+","+cadenaNue[5]+","+cadenaNue[6]+","+cadenaNue[7];
+            horario.set(hora, cadenaNueF);
+            mt.guardarTxt(horario, "HorarioDB.txt");
+            JOptionPane.showMessageDialog(this, "Cita medica agregada correctamente");
+            GuiCitaMedica gm = new GuiCitaMedica();
+            gm.setVisible(true);
+            dispose();
+        } 
        
     }//GEN-LAST:event_bFechaActionPerformed
-
+private boolean verificar(int dia, int hora){
+        String dato = horario.get(hora).split(",")[dia];
+        if ( dato.equalsIgnoreCase("false")) {
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(this, "Dia y hora no disponibles");
+            return false;
+        }
+    }
     private void cDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cDiaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cDiaActionPerformed
