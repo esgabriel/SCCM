@@ -10,6 +10,7 @@ package guisistema.citamedica;
  * @author TheHu
  */
 import clases.*;
+import guisistema.medico.GuiMedico;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -106,6 +107,11 @@ private void cargarDatos(){
 
         jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton1.setText("Regresar ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -211,6 +217,16 @@ private boolean verificar(int dia, int hora){
     private void cNSSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cNSSActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cNSSActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+         GuiCitaMedica gm = new GuiCitaMedica();
+        gm.setVisible(true);
+        dispose();
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
