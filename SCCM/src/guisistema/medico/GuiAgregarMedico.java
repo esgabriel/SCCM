@@ -6,7 +6,9 @@
 package guisistema.medico;
 
 import java.awt.event.KeyEvent;
-
+import clases.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author TheHu
@@ -16,9 +18,13 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
     /**
      * Creates new form GuiAgregarMedico
      */
+     private DB mt = new DB();
+    private ArrayList<Medico> medicos = mt.leerTxt("MedicoDB.txt");
     public GuiAgregarMedico() {
         initComponents();
+          tCedula.setToolTipText("<html>Formato de cedula<br>1. La cedula es de 8 caractares</br><br>2. Solo valores numericos</br></html>");
         this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -253,7 +259,28 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_tCedulaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if (this.evaluarCampos()) {
+            String fecha = tDia.getText() + "-" + tMes.getText() + "-" + tAnnio.getText();
+            Medico medico = new Medico(tCedula.getText(), tNombre.getText(), tApellidoPaterno.getText(), tApellidoMaterno.getText(), fecha);
+            //String contra = medico.getCedula()+","+pContra.getPassword();
+
+            medicos.add(medico);
+            //contrasenia.add(contra);
+
+            mt.guardarTxt(medicos, "MedicoDB.txt");
+            //mt.guardarTxt(contrasenia, "ContraDB.txt");
+
+            JOptionPane.showMessageDialog(this, "Medico agregado correctamente");
+
+            GuiMedico gm = new GuiMedico();
+            gm.setVisible(true);
+            dispose();
+        }
+        
+
+
+
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tApellidoPaternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tApellidoPaternoActionPerformed
@@ -312,7 +339,29 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_tAnnioKeyTyped
-
+ private boolean evaluarCampos() {
+        if (!((tNombre.getText().equals(""))
+                || (tApellidoPaterno.getText().equals(""))
+                || (tApellidoMaterno.getText().equals(""))
+                || (tCedula.getText().equals("")))) {
+            if (tCedula.getText().length() == 8) {
+                for (int i = 0; i < medicos.size(); i++) {
+                    String cedula = tCedula.getText();
+                    if (medicos.get(i).getCedula().equals(cedula)) {
+                        JOptionPane.showMessageDialog(this, "La cedula ingresada ya se encuentra dentro del sistema");
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(this, "El formato de la cedula es incorrecto");
+                return false;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Algun campo se encuentra vacio, verifique nuevamente los campos");
+            return false;
+        }
+    }
     /**
      * @param args the command line arguments
      */
