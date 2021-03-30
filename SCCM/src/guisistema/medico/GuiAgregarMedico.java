@@ -7,6 +7,7 @@ package guisistema.medico;
 
 import java.awt.event.KeyEvent;
 import clases.*;
+import guisistema.citamedica.GuiCitaMedica;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 /**
@@ -288,7 +289,15 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_tApellidoPaternoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        
+ GuiMedico gm = new GuiMedico();
+        gm.setVisible(true);
+        dispose();
+        
+
+
+
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCedulaKeyTyped
