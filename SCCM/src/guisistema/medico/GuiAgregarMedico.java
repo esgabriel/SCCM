@@ -5,6 +5,10 @@
  */
 package guisistema.medico;
 
+import java.awt.event.KeyEvent;
+import clases.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author TheHu
@@ -14,9 +18,13 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
     /**
      * Creates new form GuiAgregarMedico
      */
+     private DB mt = new DB();
+    private ArrayList<Medico> medicos = mt.leerTxt("MedicoDB.txt");
     public GuiAgregarMedico() {
         initComponents();
+          tCedula.setToolTipText("<html>Formato de cedula<br>1. La cedula es de 8 caractares</br><br>2. Solo valores numericos</br></html>");
         this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -29,21 +37,21 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel4 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        tMes = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        tCedula = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        tApellidoPaterno = new javax.swing.JTextField();
+        tNombre = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        tApellidoMaterno = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        tDia = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        tAnnio = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
 
@@ -52,15 +60,25 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Fecha Nacimiento");
 
-        jTextField6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tMes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tMes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tMesKeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Día:");
 
-        jTextField7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        tCedula.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                tCedulaActionPerformed(evt);
+            }
+        });
+        tCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tCedulaKeyTyped(evt);
             }
         });
 
@@ -81,29 +99,54 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        tApellidoPaterno.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tApellidoPaterno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                tApellidoPaternoActionPerformed(evt);
+            }
+        });
+        tApellidoPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tApellidoPaternoKeyTyped(evt);
             }
         });
 
-        jTextField2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tNombreKeyTyped(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Nombre: ");
 
-        jTextField4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tApellidoMaterno.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tApellidoMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tApellidoMaternoKeyTyped(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Apellido Paterno:");
 
-        jTextField3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tDia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tDia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tDiaKeyTyped(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Apellido Materno:");
 
-        jTextField5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tAnnio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tAnnio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tAnnioKeyTyped(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel9.setText("Agregar Médico");
@@ -133,7 +176,7 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addGap(24, 24, 24)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(tDia, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel5))
                                     .addGap(56, 56, 56)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,8 +185,8 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
                                             .addGap(67, 67, 67)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                 .addComponent(jLabel7)
-                                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(tAnnio, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(tMes, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(162, 162, 162))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,9 +195,9 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
                                         .addComponent(jLabel3))
                                     .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(tApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(tApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
                             .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
@@ -162,7 +205,7 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
                                     .addComponent(jButton2)
                                     .addComponent(jLabel8))
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(tCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(252, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -178,13 +221,13 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(83, 83, 83)
                 .addComponent(jLabel4)
                 .addGap(33, 33, 33)
@@ -194,13 +237,13 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tAnnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -211,22 +254,114 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void tCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCedulaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_tCedulaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if (this.evaluarCampos()) {
+            String fecha = tDia.getText() + "-" + tMes.getText() + "-" + tAnnio.getText();
+            Medico medico = new Medico(tCedula.getText(), tNombre.getText(), tApellidoPaterno.getText(), tApellidoMaterno.getText(), fecha);
+            //String contra = medico.getCedula()+","+pContra.getPassword();
+
+            medicos.add(medico);
+            //contrasenia.add(contra);
+
+            mt.guardarTxt(medicos, "MedicoDB.txt");
+            //mt.guardarTxt(contrasenia, "ContraDB.txt");
+
+            JOptionPane.showMessageDialog(this, "Medico agregado correctamente");
+
+            GuiMedico gm = new GuiMedico();
+            gm.setVisible(true);
+            dispose();
+        }
+        
+
+
+
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void tApellidoPaternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tApellidoPaternoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_tApellidoPaternoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void tCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCedulaKeyTyped
+        // TODO add your handling code here:
+        if ( !( (tCedula.getText().length() != 8) && (Character.isDigit(evt.getKeyChar())) )) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tCedulaKeyTyped
+
+    private void tNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tNombreKeyTyped
+        // TODO add your handling code here:
+        if ( !(Character.isAlphabetic(evt.getKeyChar())  || evt.getKeyChar() == KeyEvent.VK_SPACE || evt.getKeyChar() == KeyEvent.VK_BACK_SPACE) ) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tNombreKeyTyped
+
+    private void tApellidoPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tApellidoPaternoKeyTyped
+        // TODO add your handling code here:
+        if ( !Character.isAlphabetic(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tApellidoPaternoKeyTyped
+
+    private void tApellidoMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tApellidoMaternoKeyTyped
+        // TODO add your handling code here:
+        if ( !Character.isAlphabetic(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tApellidoMaternoKeyTyped
+
+    private void tDiaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tDiaKeyTyped
+        // TODO add your handling code here:
+        if ( !(Character.isDigit(evt.getKeyChar()) && tDia.getText().length() != 2) ) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tDiaKeyTyped
+
+    private void tMesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tMesKeyTyped
+        // TODO add your handling code here:
+        if ( !( Character.isDigit(evt.getKeyChar()) && tMes.getText().length() != 2) ) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tMesKeyTyped
+
+    private void tAnnioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAnnioKeyTyped
+        // TODO add your handling code here:
+        if ( !( Character.isDigit(evt.getKeyChar()) && tAnnio.getText().length() != 4) ) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tAnnioKeyTyped
+ private boolean evaluarCampos() {
+        if (!((tNombre.getText().equals(""))
+                || (tApellidoPaterno.getText().equals(""))
+                || (tApellidoMaterno.getText().equals(""))
+                || (tCedula.getText().equals("")))) {
+            if (tCedula.getText().length() == 8) {
+                for (int i = 0; i < medicos.size(); i++) {
+                    String cedula = tCedula.getText();
+                    if (medicos.get(i).getCedula().equals(cedula)) {
+                        JOptionPane.showMessageDialog(this, "La cedula ingresada ya se encuentra dentro del sistema");
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(this, "El formato de la cedula es incorrecto");
+                return false;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Algun campo se encuentra vacio, verifique nuevamente los campos");
+            return false;
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -274,12 +409,12 @@ public class GuiAgregarMedico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField tAnnio;
+    private javax.swing.JTextField tApellidoMaterno;
+    private javax.swing.JTextField tApellidoPaterno;
+    private javax.swing.JTextField tCedula;
+    private javax.swing.JTextField tDia;
+    private javax.swing.JTextField tMes;
+    private javax.swing.JTextField tNombre;
     // End of variables declaration//GEN-END:variables
 }
