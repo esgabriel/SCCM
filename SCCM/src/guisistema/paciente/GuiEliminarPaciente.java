@@ -36,9 +36,9 @@ public class GuiEliminarPaciente extends javax.swing.JFrame {
         pPacientes = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        tNombre = new javax.swing.JTextField();
+        tApellidoP = new javax.swing.JTextField();
+        tApellidoM = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,16 +72,16 @@ public class GuiEliminarPaciente extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setEditable(false);
+        tNombre.setEditable(false);
 
-        jTextField2.setEditable(false);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        tApellidoP.setEditable(false);
+        tApellidoP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                tApellidoPActionPerformed(evt);
             }
         });
 
-        jTextField3.setEditable(false);
+        tApellidoM.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,15 +103,15 @@ public class GuiEliminarPaciente extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(53, 53, 53)
-                                .addComponent(jTextField1))
+                                .addComponent(tNombre))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField2))
+                                .addComponent(tApellidoP))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField3)))
+                                .addComponent(tApellidoM)))
                         .addContainerGap(31, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
@@ -134,14 +134,14 @@ public class GuiEliminarPaciente extends javax.swing.JFrame {
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tApellidoP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(42, 42, 42)
                         .addComponent(jLabel5))
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tApellidoM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -154,11 +154,14 @@ public class GuiEliminarPaciente extends javax.swing.JFrame {
 
     private void pPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pPacientesActionPerformed
         // TODO add your handling code here:
+        tNombre.setText(pacientes.get(pPacientes.getSelectedIndex()).getNombre());
+        tApellidoP.setText(pacientes.get(pPacientes.getSelectedIndex()).getaP());
+        tApellidoM.setText(pacientes.get(pPacientes.getSelectedIndex()).getaM());
     }//GEN-LAST:event_pPacientesActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void tApellidoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tApellidoPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_tApellidoPActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int elementoSeleccionado = pPacientes.getSelectedIndex();
@@ -169,7 +172,9 @@ public class GuiEliminarPaciente extends javax.swing.JFrame {
             DB mt = new DB();
             mt.guardarTxt(pacientes, "PacienteDB.txt");
             JOptionPane.showMessageDialog(this, "Paciente eliminado de forma correcta.");
-            //Deberia voler al menu anterio o mantener en este???
+            GuiPaciente menuPaciente = new GuiPaciente();
+            menuPaciente.setVisible(true);
+            dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -222,9 +227,9 @@ public class GuiEliminarPaciente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JComboBox<String> pPacientes;
+    private javax.swing.JTextField tApellidoM;
+    private javax.swing.JTextField tApellidoP;
+    private javax.swing.JTextField tNombre;
     // End of variables declaration//GEN-END:variables
 }

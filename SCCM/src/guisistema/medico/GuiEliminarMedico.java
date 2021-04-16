@@ -188,7 +188,9 @@ public class GuiEliminarMedico extends javax.swing.JFrame {
             DB mt = new DB();
             mt.guardarTxt(medicos, "MedicoDB.txt");
             JOptionPane.showMessageDialog(this, "Medico eliminado de forma correcta.");
-            //Deberia voler al menu anterio o mantener en este???
+            GuiMedico menuMedico = new GuiMedico();
+            menuMedico.setVisible(true);
+            dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
