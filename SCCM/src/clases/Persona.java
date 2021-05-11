@@ -1,25 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package clases;
 
-/**
- *
- * @author TheHu
- */
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Persona {
     private String nombre;
     private String aP;
     private String aM;
     private String fechaNacimiento;
+    private int edad;
     
     public Persona(){
         this.nombre = "";
         this.aP = "";
         this.aM = "";
         this.fechaNacimiento="";
+        this.edad = 0;
     }
     
     public Persona(String nombre, String aP, String aM, String fechaNacimiento){
@@ -61,9 +58,20 @@ public class Persona {
         this.fechaNacimiento = fechaNacimiento;
     }
     
+    public void setEdad() {
+        Date fechaActual = new Date();
+        SimpleDateFormat formatoDate = new SimpleDateFormat("yyyy");
+        String fecha = formatoDate.format(fechaActual);
+        edad = Integer.valueOf(fecha) - Integer.valueOf(getFechaNacimiento().split("-")[2]);
+    }
+
+    public int getEdad(){
+        return edad;
+    }
+    
     @Override
     public String toString(){
-        String persona = nombre +","+aP+","+aM+","+fechaNacimiento;
+        String persona = nombre +"~"+aP+"~"+aM+"~"+fechaNacimiento;
         
         return persona;
     }

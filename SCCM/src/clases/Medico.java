@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package clases;
 
-/**
- *
- * @author TheHu
- */
+import java.util.ArrayList;
+
 public class Medico extends Persona {
     private String cedula;
 
@@ -30,9 +24,18 @@ public class Medico extends Persona {
         this.cedula = cedula;
     }
     
+    public static Medico buscar(ArrayList<Medico> listaMedicos, String cedula){
+        for(Medico medicoTemp : listaMedicos){
+            if (medicoTemp.getCedula().equals(cedula)) {
+                return medicoTemp;
+            }
+        }
+        return null;
+    }
+    
     @Override
     public String toString() {
-        String medico = super.toString() + "," + this.cedula ;
+        String medico = super.toString() +"~"+ this.cedula ;
 
         return medico;
     }
