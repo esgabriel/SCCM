@@ -1,17 +1,32 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package guisistema.citamedica;
 
+/**
+ *
+ * @author TheHu
+ */
 import clases.*;
+//import guisistema.medico.GuiMedico;
 import java.util.ArrayList;
+//import java.util.Calendar;
+//import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
+//import txtPlano.*;
 
 public class GuiAgregarCitaMedica extends javax.swing.JFrame {
 
     private DB mt = new DB();
-    private ArrayList<Paciente> pacientes = mt.leerTxt(mt.PACIENTE);
-    private ArrayList<Medico> medicos = mt.leerTxt(mt.MEDICO);
-    private ArrayList<String> horario = mt.leerTxt(mt.HORARIO);
+    private ArrayList<Paciente> pacientes = mt.leerTxt("PacienteDB.txt");
+    private ArrayList<Medico> medicos = mt.leerTxt("MedicoDB.txt");
+    private ArrayList<String> horario = mt.leerTxt("HorarioDB.txt");
 
+    /**
+     * Creates new form GuiAgregarCitaMedica
+     */
     public GuiAgregarCitaMedica() {
         initComponents();
         cargarDatos();
@@ -32,7 +47,7 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
 
         tHora = new javax.swing.JTextField();
         cNSS = new javax.swing.JComboBox<>();
-        bFecha = new javax.swing.JButton();
+        agendarButton = new javax.swing.JButton();
         cNombreDoc = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -40,24 +55,20 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
         cDia = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        regresarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tHora.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tHora.setToolTipText("Formato de 24 horas");
 
         cNSS.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cNSS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cNSSActionPerformed(evt);
-            }
-        });
 
-        bFecha.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        bFecha.setText("Agendar Cita");
-        bFecha.addActionListener(new java.awt.event.ActionListener() {
+        agendarButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        agendarButton.setText("Agendar Cita");
+        agendarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bFechaActionPerformed(evt);
+                agendarButtonActionPerformed(evt);
             }
         });
 
@@ -74,11 +85,6 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
 
         cDia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" }));
-        cDia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cDiaActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Hora");
@@ -86,11 +92,11 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel5.setText("Agendar Cita Médica ");
 
-        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton1.setText("Regresar ");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        regresarButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        regresarButton.setText("Regresar ");
+        regresarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                regresarButtonActionPerformed(evt);
             }
         });
 
@@ -104,7 +110,7 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(regresarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -122,7 +128,7 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
                                 .addComponent(tHora, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(101, 101, 101)
-                                .addComponent(bFecha)))
+                                .addComponent(agendarButton)))
                         .addGap(40, 40, 40))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(185, 185, 185)
@@ -153,8 +159,8 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
                     .addComponent(tHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bFecha)
-                    .addComponent(jButton1))
+                    .addComponent(agendarButton)
+                    .addComponent(regresarButton))
                 .addGap(38, 38, 38))
         );
 
@@ -163,13 +169,13 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFechaActionPerformed
+    private void agendarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agendarButtonActionPerformed
 
         int hora = Integer.valueOf(tHora.getText());
         int dia = cDia.getSelectedIndex() + 1;
 
         if (verificar(dia, hora)) {
-            String[] cadenaNue = horario.get(hora).split(",");
+            String[] cadenaNue = horario.get(hora).split("~");
 
             cadenaNue[dia] = medicos.get(cNombreDoc.getSelectedIndex()).getCedula() + "-" + pacientes.get(cNSS.getSelectedIndex()).getNumeroSeguroSocial();
             String cadenaNueF = cadenaNue[0] + "~" + cadenaNue[1] + "~" + cadenaNue[2] + "~" + cadenaNue[3] + "~" + cadenaNue[4] + "~" + cadenaNue[5] + "~" + cadenaNue[6] + "~" + cadenaNue[7];
@@ -180,11 +186,10 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
             gm.setVisible(true);
             dispose();
         }
-
-    }//GEN-LAST:event_bFechaActionPerformed
+    }//GEN-LAST:event_agendarButtonActionPerformed
     
     private boolean verificar(int dia, int hora) {
-        String dato = horario.get(hora).split(",")[dia];
+        String dato = horario.get(hora).split("~")[dia];
         if (dato.equalsIgnoreCase("false")) {
             return true;
         } else {
@@ -193,24 +198,18 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
         }
     }
     
-    private void cDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cDiaActionPerformed
+    private void regresarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cDiaActionPerformed
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cancela la accion?", "Confirmaccion", JOptionPane.YES_NO_OPTION);
+        
+        if (respuesta == JOptionPane.YES_OPTION) {
+            GuiCitaMedica gm = new GuiCitaMedica();
+            gm.setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_regresarButtonActionPerformed
 
-    private void cNSSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cNSSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cNSSActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-
-        GuiCitaMedica gm = new GuiCitaMedica();
-        gm.setVisible(true);
-        dispose();
-
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
@@ -247,16 +246,16 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bFecha;
+    private javax.swing.JButton agendarButton;
     private javax.swing.JComboBox<String> cDia;
     private javax.swing.JComboBox<String> cNSS;
     private javax.swing.JComboBox<String> cNombreDoc;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton regresarButton;
     private javax.swing.JTextField tHora;
     // End of variables declaration//GEN-END:variables
 }

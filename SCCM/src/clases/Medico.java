@@ -35,7 +35,7 @@ public class Medico extends Persona {
     
     @Override
     public String toString() {
-        String medico = super.toString() +"~"+ this.cedula ;
+        String medico = super.toString() + "~" + this.cedula ;
 
         return medico;
     }

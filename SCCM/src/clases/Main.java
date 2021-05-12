@@ -24,12 +24,13 @@ public class Main {
     private static void crearDocumentos() {
         String documentos = System.getenv("USERPROFILE");
         
-        File carpeta = new File(documentos + "\\Documents\\DataBase");
+        File carpeta = new File(documentos + "\\Documents\\DBLocal");//DataBase
 
         if (carpeta.mkdir()) {
             ArrayList<String> horario = new ArrayList();
 
             for (int i = 0; i < 24; i++) {
+                //String hora = i + ",false,false,false,false,false,false,false";
                 String hora = i + "~false~false~false~false~false~false~false";
                 horario.add(hora);
             }

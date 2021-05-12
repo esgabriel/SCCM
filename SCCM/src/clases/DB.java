@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 public class DB {
 
-    private final String direccion = System.getenv("USERPROFILE")+"\\Documents\\DataBase\\";
+    //private final String direccion = System.getenv("USERPROFILE")+"\\Documents\\DB\\";
+    private final String direccion = System.getenv("USERPROFILE")+"\\Documents\\DBLocal\\";
     
     public final String HORARIO = "HorarioDB.txt";
     public final String MEDICO = "MedicoDB.txt";
@@ -25,27 +26,27 @@ public class DB {
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
             String linea;
-            if (file.equalsIgnoreCase(MEDICO)) {
+            if (file.equalsIgnoreCase("MedicoDB.txt")) {
                 while ((linea = br.readLine()) != null) {
                     String medicox[] = linea.split("~");
-                    System.out.println(linea);
                     Medico medico = new Medico(medicox[4], medicox[0], medicox[1], medicox[2], medicox[3]);
                     cadena.add(medico);
                 }
             }
-            if (file.equalsIgnoreCase(HORARIO)) {
+            if (file.equalsIgnoreCase("HorarioDB.txt")) {
                 while ((linea = br.readLine()) != null) {
                     cadena.add(linea);
                 }
             }
-            if (file.equalsIgnoreCase(HISTORIAL)) {
+            if (file.equalsIgnoreCase("HistorialDB.txt")) {
                 while ((linea = br.readLine()) != null) {
                     String hist[] = linea.split("~");
                     Historial historial = new Historial(hist[0],hist[1],hist[2],hist[3]);
                     cadena.add(historial);
                 }
             }
-            if (file.equalsIgnoreCase(PACIENTE)) {
+            if (file.equalsIgnoreCase("PacienteDB.txt")) {
+                //En construccion  -  Luis Roma,Mendez,Perez,1-1-1990,12345678901
                 while ((linea = br.readLine()) != null) {
                     String pacientex[] = linea.split("~");
                     Paciente paciente = new Paciente(pacientex[4],pacientex[0],pacientex[1],pacientex[2],pacientex[3]);
@@ -53,6 +54,7 @@ public class DB {
                 }
             }
         } catch (Exception ex) {
+            //No se pudo acceder al archivo o no se encuentra creado
             System.out.println(ex.toString());
         } finally {
             try {
@@ -60,6 +62,7 @@ public class DB {
                     fr.close();
                 }
             } catch (Exception e2) {
+                //No se pudo cerrar el archivo con exito
                 System.out.println(e2.toString());
             }
         }
@@ -74,39 +77,39 @@ public class DB {
         try {
             fichero = new FileWriter(direccion + file);
             pw = new PrintWriter(fichero);
-            if (file.equalsIgnoreCase(PACIENTE)) {
+            if (file.equalsIgnoreCase("PacienteDB.txt")) {
                 ArrayList<Paciente> nuevo = cadena;
                 for (Paciente paciente : nuevo) {
                     pw.println(paciente.toString());
                 }
             }
-            if (file.equalsIgnoreCase(MEDICO)) {
+            if (file.equalsIgnoreCase("MedicoDB.txt")) {
                 ArrayList<Medico> nueva = cadena;
                 for (Medico medico : nueva) {
                     pw.println(medico.toString());
                 }
             }
-            if (file.equalsIgnoreCase(HORARIO)) {
+            if (file.equalsIgnoreCase("HorarioDB.txt")) {
                 ArrayList<String> nueva = cadena;
                 for (String horario : nueva) {
                     pw.println(horario);
                 }
             }
-            if (file.equalsIgnoreCase(HISTORIAL)) {
+            if (file.equalsIgnoreCase("HistorialDB.txt")) {
                 ArrayList<Historial> nueva = cadena;
                 for (Historial historial : nueva) {
                     pw.println(historial.toString());
                 }
             }
         } catch (Exception ex) {
-
+            
         } finally {
             try {
                 if (null != fichero) {
                     fichero.close();
                 }
             } catch (Exception ex) {
-
+                System.out.println(ex.getMessage());
             }
         }
     }
