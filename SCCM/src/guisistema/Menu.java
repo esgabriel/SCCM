@@ -5,9 +5,14 @@ import guisistema.citamedica.GuiCitaMedica;
 import guisistema.diagnostico.GuiDiagnostico;
 import guisistema.medico.GuiMedico;
 import guisistema.paciente.GuiPaciente;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
@@ -20,7 +25,7 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -133,19 +138,27 @@ public class Menu extends javax.swing.JFrame {
                 String cedula = new String(passField.getPassword());
 
                 Medico medico = busqueda(cedula);
-                
-                if (medico != null) {
-                    //Obtener dia y hora del sistema
-                    Calendar calendario = new GregorianCalendar();
-                    int hora = calendario.get(Calendar.HOUR_OF_DAY);
-                    int dia = calendario.get(Calendar.DAY_OF_WEEK);
 
-                    if (verificarHorario(hora, dia, medico)) {
-                        GuiDiagnostico diagnosticoGui = new GuiDiagnostico(dia, hora);
-                        diagnosticoGui.setVisible(true);
-                        dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Este doctor no cuenta con citas medicas en este horario");
+                if (medico != null) {
+                    try {
+                        Calendar calendario = new GregorianCalendar();
+                        int hora = calendario.get(Calendar.HOUR_OF_DAY);
+                        String diaActual = calendario.get(Calendar.DAY_OF_MONTH) + "-" + (calendario.get(Calendar.MONTH) + 1) + "-" + calendario.get(Calendar.YEAR);
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                        Date fecha = dateFormat.parse(diaActual);
+
+                        String fechaString = dateFormat.format(fecha);
+
+                        if (verificarHorario(fechaString, hora)) {
+                            GuiDiagnostico diagnosticoGui = new GuiDiagnostico(fechaString, hora);
+                            diagnosticoGui.setVisible(true);
+                            dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Este doctor no cuenta con citas medicas en este horario");
+                        }
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "Ingrese una cedula valida");
@@ -176,14 +189,18 @@ public class Menu extends javax.swing.JFrame {
         return medicoAct;
     }
 
-    private boolean verificarHorario(int hora, int dia, Medico medico) {
-        ArrayList<String> horario = db.leerTxt(db.HORARIO);
-        String[] cadena = horario.get(hora).split("~");
-
-        if (cadena[dia].equals("false")) {
+    private boolean verificarHorario(String fecha, int hora) {
+        String archivo = db.CITA_MEDICA + fecha + ".txt";
+        ArrayList<CitaMedica> citas = db.leerTxt(archivo);
+        if (citas.size() == 0) {
             return false;
         } else {
-            return cadena[dia].split("-")[0].equals(medico.getCedula());
+            for (CitaMedica cita : citas) {
+                if (cita.getHora() == hora) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 

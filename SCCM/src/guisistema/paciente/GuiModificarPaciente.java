@@ -2,14 +2,15 @@ package guisistema.paciente;
 
 import clases.DB;
 import clases.Paciente;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class GuiModificarPaciente extends javax.swing.JFrame {
-    
+
     private ArrayList<Paciente> pacientes;
     private final int TAMANIONSS = 11;
-    
+
     public GuiModificarPaciente() {
         initComponents();
         DB mt = new DB();
@@ -33,20 +34,15 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        tDia = new javax.swing.JTextField();
-        tMes = new javax.swing.JTextField();
-        tAnnio = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         tNSS = new javax.swing.JTextField();
         cNSS = new javax.swing.JComboBox<>();
         tNombre = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        formatoDia = new javax.swing.JFormattedTextField();
         tApellidoP = new javax.swing.JTextField();
         tApellidoM = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,12 +55,6 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
         jLabel4.setText("Apellido Materno");
 
         jLabel5.setText("Fecha de nacimiento");
-
-        jLabel6.setText("Día");
-
-        jLabel7.setText("Mes");
-
-        jLabel8.setText("Año");
 
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -88,6 +78,22 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
             }
         });
 
+        formatoDia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        formatoDia.setText("31-12-2000");
+        formatoDia.setToolTipText("<html>\n<p>Formato de fecha:</p>\n<p>dia-mes-año</p>\n<p>31-12-2000</p>\n</html>");
+
+        tApellidoP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tApellidoPKeyTyped(evt);
+            }
+        });
+
+        tApellidoM.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tApellidoMKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -100,40 +106,32 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
                 .addGap(98, 98, 98))
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(57, 57, 57)
-                        .addComponent(cNSS, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(42, 42, 42)
-                                .addComponent(tNSS))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(tDia, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel2))
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(tMes, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(tApellidoM, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                                    .addComponent(tNombre)
-                                    .addComponent(tApellidoP))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tAnnio, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cNSS, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addGap(24, 24, 24)
+                            .addComponent(tApellidoM))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addGap(26, 26, 26)
+                            .addComponent(tApellidoP))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addGap(18, 18, 18)
+                            .addComponent(formatoDia, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel9)
+                            .addGap(42, 42, 42)
+                            .addComponent(tNSS))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addGap(67, 67, 67)
+                            .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -155,17 +153,11 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(tApellidoM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addComponent(jLabel5)
-                .addGap(46, 46, 46)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(tDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tAnnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(formatoDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(tNSS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -182,21 +174,27 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DB mt = new DB();
 
-        if( this.evaluarCampos() ){
-            String fecha = tDia.getText() + "-"+tMes.getText()+"-"+tAnnio.getText();
-            Paciente paciente = new Paciente( tNSS.getText(), tNombre.getText(), tApellidoP.getText(), tApellidoM.getText(), fecha);
-       
-            pacientes.remove(cNSS.getSelectedIndex());
-            pacientes.add(paciente);
-            
-            mt.guardarTxt(pacientes, "PacienteDB.txt");
-            
-            JOptionPane.showMessageDialog(this, "Paciente modificado correctamente");
+        if (this.evaluarCampos()) {
+            //String fecha = tDia.getText() + "-" + tMes.getText() + "-" + tAnnio.getText();
+            String fecha = formatoDia.getText();
+            if (fecha.length() != 0) {
+                Paciente paciente = new Paciente(tNSS.getText(), tNombre.getText(), tApellidoP.getText(), tApellidoM.getText(), fecha);
 
-            GuiPaciente gm = new GuiPaciente();
-            gm.setVisible(true);
-            dispose();
-        }else{
+                pacientes.remove(cNSS.getSelectedIndex());
+                pacientes.add(paciente);
+
+                mt.guardarTxt(pacientes, "PacienteDB.txt");
+
+                JOptionPane.showMessageDialog(this, "Paciente modificado correctamente");
+
+                GuiPaciente gm = new GuiPaciente();
+                gm.setVisible(true);
+                dispose();
+            }else{
+               JOptionPane.showMessageDialog(this, "El campo fecha se encuentra vacio");
+            }
+            
+        } else {
             System.out.println("Vacio");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -206,11 +204,10 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
         tApellidoP.setText(pacientes.get(cNSS.getSelectedIndex()).getaP());
         tApellidoM.setText(pacientes.get(cNSS.getSelectedIndex()).getaM());
         tNSS.setText(pacientes.get(cNSS.getSelectedIndex()).getNumeroSeguroSocial());
-        
-        String[] fecha = pacientes.get(cNSS.getSelectedIndex()).getFechaNacimiento().split("-");
-        tDia.setText(fecha[0]);
-        tMes.setText(fecha[1]);
-        tAnnio.setText(fecha[2]);
+
+        String fecha = pacientes.get(cNSS.getSelectedIndex()).getFechaNacimiento();
+        //String[] fecha = pacientes.get(cNSS.getSelectedIndex()).getFechaNacimiento().split("-");
+        formatoDia.setText(fecha);
     }//GEN-LAST:event_cNSSActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -220,8 +217,24 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private boolean evaluarCampos(){
-        
+    private void tApellidoPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tApellidoPKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (!(Character.isLetter(caracter) || caracter == KeyEvent.VK_SPACE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tApellidoPKeyTyped
+
+    private void tApellidoMKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tApellidoMKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (!(Character.isLetter(caracter) || caracter == KeyEvent.VK_SPACE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tApellidoMKeyTyped
+
+    private boolean evaluarCampos() {
+
         if (!((tNombre.getText().equals(""))
                 || (tApellidoP.getText().equals(""))
                 || (tApellidoM.getText().equals(""))
@@ -229,8 +242,8 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
             if (tNSS.getText().length() == TAMANIONSS) {
                 for (int i = 0; i < pacientes.size(); i++) {
                     String NSS = tNSS.getText();
-                    if ( pacientes.get(i).getNumeroSeguroSocial().equals(NSS) && cNSS.getSelectedIndex() !=i ) {
-                        
+                    if (pacientes.get(i).getNumeroSeguroSocial().equals(NSS) && cNSS.getSelectedIndex() != i) {
+
                         JOptionPane.showMessageDialog(this, "El numero de seguro social ingresado ya se encuentra dentro del sistema");
                         return false;
                     }
@@ -244,16 +257,9 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Algun campo se encuentra vacio, verifique nuevamente los campos");
             return false;
         }
-        
-        
-        
-        
-        
+
     }
-    
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -288,6 +294,7 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cNSS;
+    private javax.swing.JFormattedTextField formatoDia;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -295,15 +302,9 @@ public class GuiModificarPaciente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField tAnnio;
     private javax.swing.JTextField tApellidoM;
     private javax.swing.JTextField tApellidoP;
-    private javax.swing.JTextField tDia;
-    private javax.swing.JTextField tMes;
     private javax.swing.JTextField tNSS;
     private javax.swing.JTextField tNombre;
     // End of variables declaration//GEN-END:variables

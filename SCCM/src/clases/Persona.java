@@ -71,6 +71,9 @@ public class Persona {
         return edad;
     }
     
+    public String getNombreCompleto(){
+        return nombre+" "+aP+" "+aM;
+    }
     @Override
     public String toString() {
         String persona = nombre + "~" + aP + "~" + aM + "~" + fechaNacimiento;

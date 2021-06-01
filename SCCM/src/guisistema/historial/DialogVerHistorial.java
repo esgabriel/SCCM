@@ -3,7 +3,6 @@ package guisistema.historial;
 import clases.*;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 
 public class DialogVerHistorial extends javax.swing.JDialog {
 
@@ -24,21 +23,9 @@ public class DialogVerHistorial extends javax.swing.JDialog {
         citasMedicasComboBox.removeAllItems();
         int cont = 1;
         for (Historial hi : historialPersonal) {
-            citasMedicasComboBox.addItem(cont + " - " + hi.forma());
+            citasMedicasComboBox.addItem(hi.getFecha() + " - " + hi.forma());
             cont++;
         }
-        //
-        /*String txt = "1~2~3~6~4~6~9~4";
-        ArrayList cadena = new ArrayList<>();
-        ArrayList nue = new ArrayList<>();
-        for (String x : txt.split("~")) {
-            nue.add(x);
-            System.out.println(x);
-        }
-        cadena.add("Nombre");
-        cadena.add("Paciente");
-        cadena.add(nue);
-        modelo.addAll((ArrayList) cadena.get(2));*/
     }
 
     @SuppressWarnings("unchecked")
@@ -50,7 +37,6 @@ public class DialogVerHistorial extends javax.swing.JDialog {
         recetaList = new javax.swing.JList<>();
         citasMedicasComboBox = new javax.swing.JComboBox<>();
         volverButton = new javax.swing.JButton();
-        modificarButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         diagnosticoTextArea = new javax.swing.JTextArea();
 
@@ -74,13 +60,6 @@ public class DialogVerHistorial extends javax.swing.JDialog {
             }
         });
 
-        modificarButton.setText("Modificar receta");
-        modificarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modificarButtonActionPerformed(evt);
-            }
-        });
-
         diagnosticoTextArea.setColumns(20);
         diagnosticoTextArea.setRows(5);
         jScrollPane2.setViewportView(diagnosticoTextArea);
@@ -93,18 +72,17 @@ public class DialogVerHistorial extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(volverButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(modificarButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(27, 27, 27)
-                        .addComponent(citasMedicasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(volverButton)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(27, 27, 27)
+                                .addComponent(citasMedicasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -119,9 +97,7 @@ public class DialogVerHistorial extends javax.swing.JDialog {
                     .addComponent(jScrollPane2)
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(volverButton)
-                    .addComponent(modificarButton))
+                .addComponent(volverButton)
                 .addContainerGap())
         );
 
@@ -136,54 +112,12 @@ public class DialogVerHistorial extends javax.swing.JDialog {
             ArrayList lista = historialPersonal.get(index).toArray();
             modelo.addAll(lista);
             diagnosticoTextArea.setText(historialPersonal.get(index).getDiagnostico());
-            /*        //Array de arrays y la posicion del comboBox es de la lista principal
-        int index = citasMedicasComboBox.getSelectedIndex();
-        ArrayList<ArrayList> lista = new ArrayList<>();
-        ArrayList lis2 = new ArrayList<>();
-        lis2.add("Paracetamol");
-        lis2.add("Lidocaina");
-        lis2.add("Minecraf");
-        lis2.add("No se que mas");
-        lista.add(lis2);
-
-        ArrayList list3 = new ArrayList<>();
-        list3.add("Paamol");
-        list3.add("Lina");
-        list3.add("Minraf");
-        list3.add("No mas");
-        lista.add(list3);
-        //lista.add("Pocion de mana¬Scrim¬Fifa");
-        //lista.add("Pick1¬pic2");
-        //lista.add("000¬1235¬66699");
-
-        switch(index){
-            case 0:
-            modelo.addAll(lista.get(index));
-            break;
-            case 1:
-            modelo.addAll(lista.get(index));
-            break;
-            case 2:
-            break;
-            case 3:
-            break;
-            default:
-            break;
-        }*/
         }
     }//GEN-LAST:event_citasMedicasComboBoxActionPerformed
 
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverButtonActionPerformed
-        // TODO add your handling code here:
-        //add(new PanelModificarReceta());
         dispose();
     }//GEN-LAST:event_volverButtonActionPerformed
-
-    private void modificarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarButtonActionPerformed
-        // TODO add your handling code here:
-        //PanelModificarReceta panel = new PanelModificarReceta(this);
-        //panel.setVisible(true);
-    }//GEN-LAST:event_modificarButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,7 +167,6 @@ public class DialogVerHistorial extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JButton modificarButton;
     private javax.swing.JList<String> recetaList;
     private javax.swing.JButton volverButton;
     // End of variables declaration//GEN-END:variables

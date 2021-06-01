@@ -12,10 +12,12 @@ public class GuiAgregarReceta extends javax.swing.JFrame {
     private Medico medico;
     private Paciente paciente;
     private String diagnostico;
+    private String fecha;
     private DefaultListModel modelo = new DefaultListModel();
 
-    public GuiAgregarReceta(Paciente paciente, Medico medico, String diagnostico) {
+    public GuiAgregarReceta(String fecha, Paciente paciente, Medico medico, String diagnostico) {
         initComponents();
+        this.fecha = fecha;
         this.medico = medico;
         this.paciente = paciente;
         this.diagnostico = diagnostico;
@@ -161,7 +163,7 @@ public class GuiAgregarReceta extends javax.swing.JFrame {
                 receta += temp.toString() + "¬";
             }
             receta = receta.substring(0, (receta.length() - 1));
-            Historial hist = new Historial(paciente.getNumeroSeguroSocial(), medico.getCedula(), diagnostico, receta);
+            Historial hist = new Historial(paciente.getNumeroSeguroSocial(), medico.getCedula(), diagnostico, receta, fecha);
 
             DB db = new DB();
             ArrayList<Historial> historial = db.leerTxt(db.HISTORIAL);

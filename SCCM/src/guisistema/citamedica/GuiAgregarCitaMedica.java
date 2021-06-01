@@ -1,28 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package guisistema.citamedica;
 
-/**
- *
- * @author TheHu
- */
 import clases.*;
-//import guisistema.medico.GuiMedico;
 import java.util.ArrayList;
-//import java.util.Calendar;
-//import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
-//import txtPlano.*;
+
 
 public class GuiAgregarCitaMedica extends javax.swing.JFrame {
 
-    private DB mt = new DB();
-    private ArrayList<Paciente> pacientes = mt.leerTxt("PacienteDB.txt");
-    private ArrayList<Medico> medicos = mt.leerTxt("MedicoDB.txt");
-    private ArrayList<String> horario = mt.leerTxt("HorarioDB.txt");
+    private final DB mt = new DB();
+    private ArrayList<Paciente> pacientes = mt.leerTxt(mt.PACIENTE);
+    private ArrayList<Medico> medicos = mt.leerTxt(mt.MEDICO);
+    private ArrayList<CitaMedica> citas;
+    private boolean firstClick = true;
 
     /**
      * Creates new form GuiAgregarCitaMedica
@@ -45,22 +34,19 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tHora = new javax.swing.JTextField();
         cNSS = new javax.swing.JComboBox<>();
         agendarButton = new javax.swing.JButton();
         cNombreDoc = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        cDia = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         regresarButton = new javax.swing.JButton();
+        formatoDia = new javax.swing.JFormattedTextField();
+        tHora = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        tHora.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tHora.setToolTipText("Formato de 24 horas");
 
         cNSS.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -83,9 +69,6 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Día");
 
-        cDia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" }));
-
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Hora");
 
@@ -100,6 +83,23 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
             }
         });
 
+        formatoDia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        formatoDia.setText("31-12-2000");
+        formatoDia.setToolTipText("<html>\n<p>Formato de fecha:</p>\n<p>dia-mes-año</p>\n<p>31-12-2000</p>\n</html>");
+        formatoDia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formatoDiaMousePressed(evt);
+            }
+        });
+
+        tHora.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tHora.setToolTipText("Formato de 24 horas");
+        tHora.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tHoraKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,15 +111,15 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(regresarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cNSS, 0, 190, Short.MAX_VALUE)
                             .addComponent(cNombreDoc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(259, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(formatoDia, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -154,9 +154,9 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(cDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(tHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(formatoDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(agendarButton)
@@ -170,38 +170,49 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void agendarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agendarButtonActionPerformed
+        if (!firstClick) {
+            if (formatoDia.getText().length() != 0 && tHora.getText().length() != 0) {
+                //Proceso para guardar la fecha
+                String archivo = mt.CITA_MEDICA + formatoDia.getText() + ".txt";
+                citas = mt.leerTxt(archivo);
 
-        int hora = Integer.valueOf(tHora.getText());
-        int dia = cDia.getSelectedIndex() + 1;
+                int hora = Integer.parseInt(tHora.getText());
+                if (verificar(hora)) {
+                    String cedulaMedico = medicos.get(cNombreDoc.getSelectedIndex()).getCedula();
+                    String nombreMedico = medicos.get(cNombreDoc.getSelectedIndex()).getNombreCompleto();
 
-        if (verificar(dia, hora)) {
-            String[] cadenaNue = horario.get(hora).split("~");
+                    String nSSPaciente = pacientes.get(cNSS.getSelectedIndex()).getNumeroSeguroSocial();
+                    String nombrePaciente = pacientes.get(cNSS.getSelectedIndex()).getNombreCompleto();
+                    CitaMedica cita = new CitaMedica(hora, cedulaMedico, nombreMedico, nSSPaciente, nombrePaciente);
+                    citas.add(cita);
+                    mt.guardarTxt(citas, archivo);
+                    JOptionPane.showMessageDialog(this, "Cita medica agregada correctamente");
 
-            cadenaNue[dia] = medicos.get(cNombreDoc.getSelectedIndex()).getCedula() + "-" + pacientes.get(cNSS.getSelectedIndex()).getNumeroSeguroSocial();
-            String cadenaNueF = cadenaNue[0] + "~" + cadenaNue[1] + "~" + cadenaNue[2] + "~" + cadenaNue[3] + "~" + cadenaNue[4] + "~" + cadenaNue[5] + "~" + cadenaNue[6] + "~" + cadenaNue[7];
-            horario.set(hora, cadenaNueF);
-            mt.guardarTxt(horario, "HorarioDB.txt");
-            JOptionPane.showMessageDialog(this, "Cita medica agregada correctamente");
-            GuiCitaMedica gm = new GuiCitaMedica();
-            gm.setVisible(true);
-            dispose();
+                    GuiCitaMedica citaM = new GuiCitaMedica();
+                    citaM.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "No disponible la fecha ingresada");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor de ingresar un dia manualmente.");
         }
     }//GEN-LAST:event_agendarButtonActionPerformed
-    
-    private boolean verificar(int dia, int hora) {
-        String dato = horario.get(hora).split("~")[dia];
-        if (dato.equalsIgnoreCase("false")) {
-            return true;
-        } else {
-            JOptionPane.showMessageDialog(this, "Dia y hora no disponibles");
-            return false;
+
+    private boolean verificar(int hora) {
+        for (CitaMedica cita : citas) {
+            if (cita.getHora() == hora) {
+                return false;
+            }
         }
+        return true;
     }
-    
+
     private void regresarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarButtonActionPerformed
         // TODO add your handling code here:
         int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cancela la accion?", "Confirmaccion", JOptionPane.YES_NO_OPTION);
-        
+
         if (respuesta == JOptionPane.YES_OPTION) {
             GuiCitaMedica gm = new GuiCitaMedica();
             gm.setVisible(true);
@@ -209,7 +220,35 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_regresarButtonActionPerformed
 
-    
+    private void formatoDiaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formatoDiaMousePressed
+        //Mostrar formato de ejemplo y quitarlo al primer click
+        if (firstClick) {
+            formatoDia.setText("");
+            firstClick = false;
+        }
+    }//GEN-LAST:event_formatoDiaMousePressed
+
+    private void tHoraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tHoraKeyTyped
+        //Formato para controlar la hora
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+        String txt = tHora.getText();
+        if (txt.length() != 0) {
+            if (txt.length() < 2) {
+                if (Character.isDigit(evt.getKeyChar())) {
+                    txt += evt.getKeyChar();
+                }
+                int hora = Integer.parseInt(txt);
+                if (!(hora >= 0 && hora <= 23)) {
+                    evt.consume();
+                }
+            } else {
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_tHoraKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -247,9 +286,9 @@ public class GuiAgregarCitaMedica extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agendarButton;
-    private javax.swing.JComboBox<String> cDia;
     private javax.swing.JComboBox<String> cNSS;
     private javax.swing.JComboBox<String> cNombreDoc;
+    private javax.swing.JFormattedTextField formatoDia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

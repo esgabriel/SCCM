@@ -5,20 +5,23 @@ import java.util.Arrays;
 
 public class Historial {
 
+    private String fecha;
     private String cedula;
     private String Nss;
     private String diagnostico;
     private String receta;
-    
+
     public Historial() {
+        fecha = "";
         cedula = "";
         Nss = "";
         diagnostico = "";
         //receta = new ArrayList<>();
         receta = "";
     }
-    
-    public Historial(String Nss, String cedula,  String diagnostico, String receta){
+
+    public Historial(String Nss, String cedula, String diagnostico, String receta, String fecha) {
+        this.fecha = fecha;
         this.Nss = Nss;
         this.cedula = cedula;
         this.diagnostico = diagnostico;
@@ -56,19 +59,26 @@ public class Historial {
     public void setReceta(String receta) {
         this.receta = receta;
     }
-    
-    public ArrayList toArray(){
+
+    public ArrayList toArray() {
         ArrayList lista = new ArrayList<>();
         lista.addAll(Arrays.asList(receta.split("¬")));
         return lista;
     }
-    
+
     @Override
-    public String toString(){
-        return String.format("%s~%s~%s~%s", Nss,cedula,diagnostico,receta);
+    public String toString() {
+        return String.format("%s~%s~%s~%s~%s", Nss, cedula, diagnostico, receta, fecha);
     }
-    
+
     public String forma(){
         return String.format("Doctor: %s", cedula);
+    }
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 }

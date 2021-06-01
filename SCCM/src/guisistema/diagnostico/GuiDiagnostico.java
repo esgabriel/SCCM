@@ -11,15 +11,16 @@ public class GuiDiagnostico extends javax.swing.JFrame {
     private final DB db = new DB();
     private Medico medico;
     private Paciente paciente;
-    private final int DIA_ACTUAL;
+    private final String DIA_ACTUAL;
     private final int HORA_ACTUAL;
+    private int posicion;
     private String diagnostico;
     
     private ArrayList<Medico> listaMedicos = db.leerTxt(db.MEDICO);
     private ArrayList<Paciente> listaPacientes = db.leerTxt(db.PACIENTE);
-    private ArrayList<String> horario = db.leerTxt(db.HORARIO);
+    private ArrayList<CitaMedica> citas;
     
-    public GuiDiagnostico(int dia, int hora) {
+    public GuiDiagnostico(String dia, int hora) {
         initComponents();
         this.setLocationRelativeTo(null);
         DIA_ACTUAL = dia;
@@ -28,16 +29,22 @@ public class GuiDiagnostico extends javax.swing.JFrame {
     }
     
     private void iniciarDatos() {
-        String Nss = horario.get(HORA_ACTUAL).split("~")[DIA_ACTUAL].split("-")[1];
-        paciente = Paciente.buscar(listaPacientes, Nss);
+        String archivo = db.CITA_MEDICA+DIA_ACTUAL+".txt";
+        citas = db.leerTxt(archivo);
         
-        String cedula = horario.get(HORA_ACTUAL).split("~")[DIA_ACTUAL].split("-")[0];
-        medico = Medico.buscar(listaMedicos, cedula);
+        for (int i = 0; i < citas.size(); i++) {
+            if (citas.get(i).getHora() == HORA_ACTUAL) {
+                posicion = i;
+                paciente = Paciente.buscar(listaPacientes, citas.get(i).getNSSPaciente());
+                medico = Medico.buscar(listaMedicos, citas.get(i).getCedulaMedico());
+                break;
+            }
+        }
         
-        medicoTextField.setText(medico.getNombre());
+        medicoTextField.setText(medico.getNombreCompleto());
         cedulaTextField.setText(medico.getCedula());
-        pacienteTextField.setText(String.format("%s %s %s", paciente.getNombre(), paciente.getaP(), paciente.getaM()));
         
+        pacienteTextField.setText(paciente.getNombreCompleto());
         paciente.setEdad();
         edadLabel.setText(String.valueOf(paciente.getEdad()));
     }
@@ -199,18 +206,17 @@ public class GuiDiagnostico extends javax.swing.JFrame {
         diagnostico = diagnostico.replaceAll("\n", "@");
         
         eliminarCita();
-        GuiAgregarReceta receta = new GuiAgregarReceta(paciente, medico, diagnostico);
+        GuiAgregarReceta receta = new GuiAgregarReceta(DIA_ACTUAL, paciente, medico, diagnostico);
         receta.setVisible(true);
         dispose();
     }//GEN-LAST:event_continuarButtonActionPerformed
 
     private void eliminarCita(){
-        CitaMedica cita = new CitaMedica();
-        String arr[] = horario.get(HORA_ACTUAL).split("~");
-        arr[DIA_ACTUAL] = "false";
-        String nuevo = cita.formato(arr);
-        horario.set(HORA_ACTUAL, nuevo);
-        db.guardarTxt(horario, db.HORARIO);
+        citas.remove(posicion);
+        if (!db.borrarTxt(citas, DIA_ACTUAL)) {
+            String archivo = db.CITA_MEDICA+DIA_ACTUAL+".txt";
+            db.guardarTxt(citas, DIA_ACTUAL);
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cedulaTextField;

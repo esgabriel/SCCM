@@ -8,22 +8,30 @@ import javax.swing.JOptionPane;
 public class GuiModificarCitaMedica extends javax.swing.JFrame {
 
     private final DB db = new DB();
-    private CitaMedica cita = new CitaMedica();
-    private ArrayList<String> citasMedicas = db.leerTxt(db.HORARIO);
-    
-    //private int NSS;
-    
+    private ArrayList<CitaMedica> citas;
+    private String diaAntiguo;
+    private boolean firstClick = true;
+    private int posicion;
+
     public GuiModificarCitaMedica() {
         initComponents();
     }
 
+    private boolean existe(ArrayList<CitaMedica> cadena, int hora) {
+        for (int i = 0; i < cadena.size(); i++) {
+            if (cadena.get(i).getHora() == hora) {
+                posicion = i;
+                return true;
+            }
+        }
+        return false;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel5 = new javax.swing.JLabel();
-        horaTextField = new javax.swing.JTextField();
-        diaComboBox = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         buscarButton = new javax.swing.JButton();
@@ -33,24 +41,18 @@ public class GuiModificarCitaMedica extends javax.swing.JFrame {
         nombreLabel = new javax.swing.JLabel();
         cancelarButton = new javax.swing.JButton();
         aceptarButton = new javax.swing.JButton();
-        diaNuevoComboBox = new javax.swing.JComboBox<>();
-        horaNuevaTextField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        formatoDiaBusqueda = new javax.swing.JFormattedTextField();
+        formatoDiaFinal = new javax.swing.JFormattedTextField();
+        tHoraBusqueda = new javax.swing.JTextField();
+        tHoraFinal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 400));
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel5.setText("Modificar Cita Médica ");
-
-        horaTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                horaTextFieldKeyTyped(evt);
-            }
-        });
-
-        diaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" }));
 
         jLabel2.setText("Día");
 
@@ -85,19 +87,39 @@ public class GuiModificarCitaMedica extends javax.swing.JFrame {
             }
         });
 
-        diaNuevoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Domingo", "Lunes", "Martes", "Jueves", "Viernes", "Sabado" }));
-        diaNuevoComboBox.setEnabled(false);
-
-        horaNuevaTextField.setEditable(false);
-        horaNuevaTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                horaNuevaTextFieldKeyTyped(evt);
-            }
-        });
-
         jLabel4.setText("Día");
 
         jLabel7.setText("Hora");
+
+        formatoDiaBusqueda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        formatoDiaBusqueda.setText("31-12-2000");
+        formatoDiaBusqueda.setToolTipText("<html>\n<p>Formato de fecha:</p>\n<p>dia-mes-año</p>\n<p>31-12-2000</p>\n</html>");
+        formatoDiaBusqueda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formatoDiaBusquedaMousePressed(evt);
+            }
+        });
+
+        formatoDiaFinal.setEditable(false);
+        formatoDiaFinal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        formatoDiaFinal.setToolTipText("<html>\n<p>Formato de fecha:</p>\n<p>dia-mes-año</p>\n<p>31-12-2000</p>\n</html>");
+
+        tHoraBusqueda.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tHoraBusqueda.setToolTipText("Formato de 24 horas");
+        tHoraBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tHoraBusquedaKeyTyped(evt);
+            }
+        });
+
+        tHoraFinal.setEditable(false);
+        tHoraFinal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tHoraFinal.setToolTipText("Formato de 24 horas");
+        tHoraFinal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tHoraFinalKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,7 +139,7 @@ public class GuiModificarCitaMedica extends javax.swing.JFrame {
                         .addComponent(aceptarButton)
                         .addGap(33, 33, 33))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(137, Short.MAX_VALUE)
+                .addContainerGap(88, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
@@ -129,21 +151,22 @@ public class GuiModificarCitaMedica extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(diaNuevoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(diaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(formatoDiaBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(formatoDiaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(nombreLabel))
+                                .addComponent(nombreLabel)
+                                .addGap(90, 90, 90))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(88, 88, 88)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel7))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(horaNuevaTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
-                                    .addComponent(horaTextField))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tHoraFinal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tHoraBusqueda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(62, 62, 62)
                 .addComponent(buscarButton)
                 .addGap(52, 52, 52))
@@ -155,24 +178,24 @@ public class GuiModificarCitaMedica extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(horaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(diaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(buscarButton)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(formatoDiaBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tHoraBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(nSSLabel)
                     .addComponent(jLabel6)
                     .addComponent(nombreLabel))
-                .addGap(40, 40, 40)
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(diaNuevoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(horaNuevaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
+                    .addComponent(jLabel7)
+                    .addComponent(formatoDiaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tHoraFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelarButton)
                     .addComponent(aceptarButton))
@@ -182,112 +205,101 @@ public class GuiModificarCitaMedica extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void horaTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_horaTextFieldKeyTyped
-        // TODO add your handling code here: Limitar a solo digitos y formato de 24 horas (00 -> 23)
-        if (!(Character.isDigit(evt.getKeyChar()) || evt.getKeyChar() == KeyEvent.VK_BACK_SPACE)) {
-            evt.consume();
-        } else {
-            String texto = horaTextField.getText();
-            if (texto.length() == 2) {
-                evt.consume();
-                /*/if (texto.length() != 0) {
-                    int hora = Integer.valueOf(texto);
-                    if (!(hora >= 0 && hora <= 23)) {
-                        evt.consume();
-                    }
-                }/*/
-            }
-        }
-    }//GEN-LAST:event_horaTextFieldKeyTyped
-
     private void buscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonActionPerformed
         // TODO add your handling code here:
-        if (horaTextField.getText().length() != 0) { // Verificar que se ingresa una hora valida
-            int dia = diaComboBox.getSelectedIndex() + 1;
-            int hora = Integer.valueOf(horaTextField.getText());
+        if (!firstClick) {
+            if (formatoDiaBusqueda.getText().length() != 0 && tHoraBusqueda.getText().length() != 0) {
+                String archivo = db.CITA_MEDICA + formatoDiaBusqueda.getText() + ".txt";
+                citas = db.leerTxt(archivo);
+                if (!citas.isEmpty()) {
+                    int hora = Integer.parseInt(tHoraBusqueda.getText());
+                    if (existe(citas, hora)) {
+                        diaAntiguo = formatoDiaBusqueda.getText();
+                        nSSLabel.setText(citas.get(posicion).getNSSPaciente());
+                        nombreLabel.setText(citas.get(posicion).getNombrePaciente());
 
-            if (!verificarFecha(hora, dia)) {//Verificar que existe cita en ese dia - hora
-                //Bloquear comboBox y textField para evitar modificación
-                diaComboBox.disable();
-                horaTextField.setEditable(false);
-                
-                diaNuevoComboBox.enable();
-                horaNuevaTextField.setEditable(true);
-                
-                String nss = citasMedicas.get(hora).split("~")[dia].split("-")[1];
-                nSSLabel.setText(nss);
-                //nombreLabel.setText("Jose Angel Rincon Martinez"); //Nombre del paciente...
-                quitarCita(hora, dia);
-                
-                diaNuevoComboBox.setSelectedIndex(dia-1);
-                horaNuevaTextField.setText(String.valueOf(hora));
+                        formatoDiaBusqueda.setEditable(false);
+                        tHoraBusqueda.setEditable(false);
+
+                        formatoDiaFinal.setEditable(true);
+                        tHoraFinal.setEditable(true);
+                        formatoDiaFinal.setText(formatoDiaBusqueda.getText());
+                        tHoraFinal.setText(tHoraBusqueda.getText());
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No se encontraron citas medicas en la hora ingresada");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se encontraron citas medicas en el dia ingresado");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Cita medica no encontrada ", "Sin informacion", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Campo(s) Dia/Hora se encuentra vacio(s)");
             }
         } else {
-            horaTextField.requestFocus();
-            JOptionPane.showMessageDialog(this, "El campo 'Hora' se encuentra vacio\nPor favor ingrese una hora valida", "Campo vacio", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ingrese dia de forma manual");
         }
     }//GEN-LAST:event_buscarButtonActionPerformed
 
-    private void horaNuevaTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_horaNuevaTextFieldKeyTyped
-        // TODO add your handling code here:
-        if (!(Character.isDigit(evt.getKeyChar()) || evt.getKeyChar() == KeyEvent.VK_BACK_SPACE)) {
-            evt.consume();
-        } else {
-            String texto = horaNuevaTextField.getText();
-            if ( texto.length() == 2) {
-                evt.consume();
-                /*if (texto.length() != 0) {
-                    int hora = Integer.valueOf(texto);
-                    System.out.println(hora);
-                    if ( hora > 23 ) {
-                        evt.consume();
-                    }
-                }*/
-            } /*else {
-                evt.consume();
-            }*/
-        }
-    }//GEN-LAST:event_horaNuevaTextFieldKeyTyped
-
     private void aceptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButtonActionPerformed
-        // TODO add your handling code here:
-        if (horaTextField.getText().length() != 0) {
-            int dia = diaNuevoComboBox.getSelectedIndex() + 1;
-            int hora = Integer.valueOf(horaNuevaTextField.getText());
-            
-            if (verificarFecha(hora, dia)) {
-                String arr[] = citasMedicas.get(hora).split("~");
-                arr[dia] = cita.getCita();
-                System.out.println("nueva"+cita.formato(arr));
-                citasMedicas.set(hora, cita.formato(arr));
-                db.guardarTxt(citasMedicas, db.HORARIO);
-                
-                try{
-                    db.guardarTxt(citasMedicas, db.HORARIO);
-                    JOptionPane.showMessageDialog(this, "Cita medica modificada correctamente","Guardado exitoso",JOptionPane.INFORMATION_MESSAGE);
-                    
-                    GuiCitaMedica citaMenu = new GuiCitaMedica();
-                    citaMenu.setVisible(true);
-                    dispose();
-                }catch(Exception ex){
-                    //No fue posible modifcar el archivo
+        if (formatoDiaFinal.getText().length() != 0 && tHoraFinal.getText().length() != 0) {
+            String dia = formatoDiaFinal.getText();
+            CitaMedica citaAntigua = citas.get(posicion);
+            citas.remove(posicion);
+
+            if (dia.equalsIgnoreCase(diaAntiguo)) {
+                int hora = Integer.parseInt(tHoraFinal.getText());
+                if (!existe(citas, hora)) {
+                    int respuesta = JOptionPane.showConfirmDialog(this, "¿Esta seguro de modificar la cita medica?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+
+                    if (respuesta == JOptionPane.YES_OPTION) {
+                        citaAntigua.setHora(hora);
+                        citas.add(citaAntigua);
+
+                        String archivo = db.CITA_MEDICA + diaAntiguo + ".txt";
+                        db.guardarTxt(citas, archivo);
+                        JOptionPane.showMessageDialog(this, "Modificacion realizada de forma exitosa");
+                        
+                        GuiCitaMedica citaM = new GuiCitaMedica();
+                        citaM.setVisible(true);
+                        dispose();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se encuentra disponible la fecha ingresada");
                 }
-            }else{
-                JOptionPane.showMessageDialog(this, "Día y hora no disponibles\nPor favor ingresar nueva","Fecha indisponible",JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                String archivo = db.CITA_MEDICA + formatoDiaFinal.getText() + ".txt";
+                ArrayList<CitaMedica> citasNuevas = db.leerTxt(archivo);
+                int hora = Integer.parseInt(tHoraFinal.getText());
+
+                if (!existe(citasNuevas, hora)) {
+                    int respuesta = JOptionPane.showConfirmDialog(this, "¿Esta seguro de modificar la cita medica?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+
+                    if (respuesta == JOptionPane.YES_OPTION) {
+                        citaAntigua.setHora(hora);
+                        citasNuevas.add(citaAntigua);
+
+                        db.guardarTxt(citasNuevas, archivo);
+                        db.borrarTxt(citas, diaAntiguo);
+                        
+                        JOptionPane.showMessageDialog(this, "Modificacion realizada de forma exitosa");
+                        
+                        GuiCitaMedica citaM = new GuiCitaMedica();
+                        citaM.setVisible(true);
+                        dispose();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se encuentra disponible la fecha ingresada");
+                }
             }
         } else {
-            horaNuevaTextField.requestFocus();
-            JOptionPane.showMessageDialog(this, "El campo 'Hora' se encuentra vacio\nPor favor ingrese una hora valida", "Campo vacio", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Campo(s) Dia/Hora se encuentra vacio(s)");
         }
-        
+
     }//GEN-LAST:event_aceptarButtonActionPerformed
 
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
         // TODO add your handling code here:
         int respuesta = JOptionPane.showConfirmDialog(this, "¿Cancelar operacion?", "Confirmacion", JOptionPane.YES_NO_OPTION);
-        
+
         if (respuesta == JOptionPane.YES_OPTION) {
             GuiCitaMedica citaMenu = new GuiCitaMedica();
             citaMenu.setVisible(true);
@@ -295,18 +307,55 @@ public class GuiModificarCitaMedica extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cancelarButtonActionPerformed
 
-    public boolean verificarFecha(int hora, int dia) {
-        return citasMedicas.get(hora).split("~")[dia].equalsIgnoreCase("false");
-    }
+    private void formatoDiaBusquedaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formatoDiaBusquedaMousePressed
+        //Mostrar formato de ejemplo y quitarlo al primer click
+        if (firstClick) {
+            formatoDiaBusqueda.setText("");
+            firstClick = false;
+        }
+    }//GEN-LAST:event_formatoDiaBusquedaMousePressed
 
-    public void quitarCita(int hora, int dia) {
-        String arr[] = citasMedicas.get(hora).split("~");
-        cita.setCita(arr[dia]);
-        arr[dia] = "false";
-        String horario = cita.formato(arr);
-        System.out.println(horario);
-        citasMedicas.set(hora, horario);
-    }
+    private void tHoraBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tHoraBusquedaKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+        String txt = tHoraBusqueda.getText();
+        if (txt.length() != 0) {
+            if (txt.length() < 2) {
+                if (Character.isDigit(evt.getKeyChar())) {
+                    txt += evt.getKeyChar();
+                }
+                int hora = Integer.parseInt(txt);
+                if (!(hora >= 0 && hora <= 23)) {
+                    evt.consume();
+                }
+            } else {
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_tHoraBusquedaKeyTyped
+
+    private void tHoraFinalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tHoraFinalKeyTyped
+        //Formato para controlar la hora
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+        String txt = tHoraFinal.getText();
+        if (txt.length() != 0) {
+            if (txt.length() < 2) {
+                if (Character.isDigit(evt.getKeyChar())) {
+                    txt += evt.getKeyChar();
+                }
+                int hora = Integer.parseInt(txt);
+                if (!(hora >= 0 && hora <= 23)) {
+                    evt.consume();
+                }
+            } else {
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_tHoraFinalKeyTyped
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -320,10 +369,8 @@ public class GuiModificarCitaMedica extends javax.swing.JFrame {
     private javax.swing.JButton aceptarButton;
     private javax.swing.JButton buscarButton;
     private javax.swing.JButton cancelarButton;
-    private javax.swing.JComboBox<String> diaComboBox;
-    private javax.swing.JComboBox<String> diaNuevoComboBox;
-    private javax.swing.JTextField horaNuevaTextField;
-    private javax.swing.JTextField horaTextField;
+    private javax.swing.JFormattedTextField formatoDiaBusqueda;
+    private javax.swing.JFormattedTextField formatoDiaFinal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -333,5 +380,7 @@ public class GuiModificarCitaMedica extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel nSSLabel;
     private javax.swing.JLabel nombreLabel;
+    private javax.swing.JTextField tHoraBusqueda;
+    private javax.swing.JTextField tHoraFinal;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,6 +12,7 @@ public class GuiAgregarPaciente extends javax.swing.JFrame {
     private DB mt = new DB();
     private ArrayList<Paciente> pacientes = mt.leerTxt("PacienteDB.txt");
     private final int TAMANIONSS  = 11 ;
+    private boolean firstClick = true;
     
     public GuiAgregarPaciente() {
         initComponents();
@@ -34,17 +35,12 @@ public class GuiAgregarPaciente extends javax.swing.JFrame {
         tApellidoP = new javax.swing.JTextField();
         tApellidoM = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        tDia = new javax.swing.JTextField();
-        tMes = new javax.swing.JTextField();
-        tAnnio = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         tNSS = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        formatoDia = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,23 +59,20 @@ public class GuiAgregarPaciente extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel4.setText("Fecha de nacimiento");
-
-        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel5.setText("Día");
-
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel6.setText("Mes");
-
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel7.setText("Año");
-
-        tMes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tMesActionPerformed(evt);
+        tApellidoP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tApellidoPKeyTyped(evt);
             }
         });
+
+        tApellidoM.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tApellidoMKeyTyped(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel4.setText("Fecha de nacimiento");
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel8.setText("NSS");
@@ -105,6 +98,15 @@ public class GuiAgregarPaciente extends javax.swing.JFrame {
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        formatoDia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        formatoDia.setText("31-12-2000");
+        formatoDia.setToolTipText("<html>\n<p>Formato de fecha:</p>\n<p>dia-mes-año</p>\n<p>31-12-2000</p>\n</html>");
+        formatoDia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formatoDiaMousePressed(evt);
             }
         });
 
@@ -134,23 +136,14 @@ public class GuiAgregarPaciente extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(formatoDia, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(tApellidoM, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(tDia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(49, 49, 49)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tMes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))
-                                .addGap(57, 57, 57)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(tAnnio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(37, 37, 37)
@@ -179,19 +172,11 @@ public class GuiAgregarPaciente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tApellidoM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(44, 44, 44)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tAnnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(formatoDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(tNSS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -205,24 +190,26 @@ public class GuiAgregarPaciente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tMesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tMesActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (this.evaluarCampos()) {
-            String fecha = tDia.getText() + "-" + tMes.getText() + "-" + tAnnio.getText();
-            Paciente paciente = new Paciente(tNSS.getText(), tNombre.getText(), tApellidoP.getText(), tApellidoM.getText(), fecha);
+            //String fecha = tDia.getText() + "-" + tMes.getText() + "-" + tAnnio.getText();
+            String fecha = formatoDia.getText();
+            if (fecha.length() != 0) {
+                Paciente paciente = new Paciente(tNSS.getText(), tNombre.getText(), tApellidoP.getText(), tApellidoM.getText(), fecha);
 
-            pacientes.add(paciente);
+                pacientes.add(paciente);
 
-            mt.guardarTxt(pacientes, "PacienteDB.txt");
+                mt.guardarTxt(pacientes, "PacienteDB.txt");
 
-            JOptionPane.showMessageDialog(this, "Paciente agregado correctamente");
+                JOptionPane.showMessageDialog(this, "Paciente agregado correctamente");
 
-            GuiPaciente gm = new GuiPaciente();
-            gm.setVisible(true);
-            dispose();
+                GuiPaciente gm = new GuiPaciente();
+                gm.setVisible(true);
+                dispose();
+            }else{
+                JOptionPane.showMessageDialog(this, "El campo fecha se encuentra vacio");
+            }
+            
         }
     }                                        
 
@@ -270,6 +257,30 @@ public class GuiAgregarPaciente extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void formatoDiaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formatoDiaMousePressed
+        //Mostrar formato de ejemplo y quitarlo al primer click
+        if (firstClick) {
+            formatoDia.setText("");
+            firstClick = false;
+        }
+    }//GEN-LAST:event_formatoDiaMousePressed
+
+    private void tApellidoPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tApellidoPKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (!(Character.isLetter(caracter) || caracter == KeyEvent.VK_SPACE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tApellidoPKeyTyped
+
+    private void tApellidoMKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tApellidoMKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (!(Character.isLetter(caracter) || caracter == KeyEvent.VK_SPACE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tApellidoMKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -306,22 +317,17 @@ public class GuiAgregarPaciente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField formatoDia;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField tAnnio;
     private javax.swing.JTextField tApellidoM;
     private javax.swing.JTextField tApellidoP;
-    private javax.swing.JTextField tDia;
-    private javax.swing.JTextField tMes;
     private javax.swing.JTextField tNSS;
     private javax.swing.JTextField tNombre;
     // End of variables declaration//GEN-END:variables
