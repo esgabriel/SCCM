@@ -118,6 +118,7 @@ public class DialogVerHistorial extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void citasMedicasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_citasMedicasComboBoxActionPerformed
